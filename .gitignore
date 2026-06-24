@@ -1,0 +1,7 @@
+carbot/config/.env.local
+carbot/config/.env.server
+*.db
+__pycache__/
+*.pyc
+.pytest_cache/
+tests/fixtures/
