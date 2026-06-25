@@ -74,7 +74,15 @@ class AutoRuScraper(Scraper):
                         log.warning("auto.ru returned %s on page %d", resp.status_code, page)
                         break
 
-                    data = resp.json()
+                    if not resp.text:
+                        log.warning("auto.ru returned empty body on page %d (status=%s)", page, resp.status_code)
+                        break
+
+                    try:
+                        data = resp.json()
+                    except Exception:
+                        log.warning("auto.ru non-JSON response on page %d: %r", page, resp.text[:300])
+                        break
                     offers = data.get("offers", [])
                     log.debug("auto.ru page %d: %d offers", page, len(offers))
 
